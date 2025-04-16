@@ -1,10 +1,10 @@
 package se.su.ovning3;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
 
 public class Exercise3 {
 
@@ -15,7 +15,34 @@ public class Exercise3 {
 	}
 
 	public void importRecordings(String fileName) {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(fileName));
+			int antal = Integer.parseInt(reader.readLine());
+			String line;
+			while ((line = reader.readLine()) != null) {
 
+				String[] parts = line.split(";");
+
+				String title = parts[0];
+				String artist = parts[1];
+				int year = Integer.parseInt(parts[2]);
+
+				int genreAntal = Integer.parseInt(reader.readLine());
+				Set<String> genre = new HashSet<>();
+				for(int i = 0; i < genreAntal; i++){
+					genre.add(reader.readLine());
+				}
+				recordings.add(new Recording(title, artist, year, genre));
+			}
+			reader.close();
+			if(recordings.size()!=antal){
+				throw new IllegalArgumentException("Fel mängd recordings");
+			}
+		} catch (FileNotFoundException e) {
+			System.out.printf("%s not found",fileName);
+		} catch (IOException e){
+			e.printStackTrace();
+		}
 	}
 
 	public Map<Integer, Double> importSales(String fileName) {
