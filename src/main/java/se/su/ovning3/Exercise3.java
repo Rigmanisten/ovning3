@@ -39,6 +39,7 @@ public class Exercise3 {
 				writer.write("</recording>");
 				writer.newLine();
 			}
+			writer.close();
 		} catch (FileNotFoundException e) {
 			System.out.printf("%s not found",fileName);
 		} catch (IOException e){
