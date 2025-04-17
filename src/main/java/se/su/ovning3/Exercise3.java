@@ -46,10 +46,6 @@ public class Exercise3 {
 		}
 	}
 
-	public static String tag(String tag, String content){
-		return "<" + tag + ">" + content + "</" + tag + ">";
-	}
-
 	public void importRecordings(String fileName) {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(fileName));
