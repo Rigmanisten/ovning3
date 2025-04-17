@@ -2,6 +2,8 @@ package se.su.ovning3;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -79,7 +81,32 @@ public class Exercise3 {
 	}
 
 	public Map<Integer, Double> importSales(String fileName) {
-		return null;
+		Map<Integer, Double> salesMap = new HashMap<>();
+
+		try {
+			DataInputStream in = new DataInputStream (new FileInputStream(fileName));
+			int amountOfPosts = in.readInt();
+
+			for(int i = 0; i < amountOfPosts; i++){
+				int year = in.readInt();
+				int month = in.readInt();
+				int day = in.readInt(); //day är oanvänd men finns här för expantion och för att skippa skapa en tom ful variabel.
+				double value = in.readDouble();
+
+				int mapKey = year * 100 + month;
+				salesMap.put(mapKey, salesMap.getOrDefault(mapKey, 0.0) + value);
+			}
+
+			in.close();
+
+		} catch (FileNotFoundException e) {
+			System.out.printf("%s not found",fileName);
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+
+		return salesMap;
+			
 	}
 
 	public List<Recording> getRecordings() {
